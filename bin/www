@@ -30,7 +30,8 @@ var models = require('../node_modules/.bin/models');
 
 
 //if you go to refresh database
-models.sequelize.sync({force:true}).then(function() {
+//force:true
+models.sequelize.sync().then(function() {
     server.listen(port);
     server.on('error', onError);
     server.on('listening', onListening);

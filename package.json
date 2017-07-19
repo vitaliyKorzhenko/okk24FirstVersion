@@ -1,3 +1,4 @@
+
 {
   "name": "myserver",
   "version": "0.0.1",
@@ -25,4 +26,3 @@
     "sequelize-cli": "^2.7.0",
     "serve-favicon": "~2.3.0"
   }
-}
