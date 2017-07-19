@@ -1,0 +1,30 @@
+<link rel="stylesheet" href="/jsLibs/themes/default/easyui.css">
+<link rel="stylesheet" href="/jsLibs/themes/icon.css">
+<!--<link rel="stylesheet"  href="'/jsLibs/demo/demo.css">-->
+
+<script src="/jsLibs/jquery.min.js"></script>
+<script src="/jsLibs/jquery.easyui.min.js"></script>
+<script src="/javascripts/task.js"></script>
+
+<div style="margin:20px 0;"></div>
+<div class="easyui-layout" style="width:100%;height:100%">
+    <div data-options="region:'center',title:'Созданные Задачи',iconCls:'icon-ok'">
+        <table class="easyui-datagrid" style="width:700px;height:100%"
+               data-options="rownumbers:true,singleSelect:true" id="idTasksGrid">
+            <thead>
+            <tr>
+                <th data-options="field: 'Id', width: 50, sortable: true, align: 'left' " @*style="display: none" *@>
+                    Id
+                </th>
+                <th data-options="field:'name',width:150,align:'left'">Имя Задачи</th>
+                <th data-options="field:'description',width:150,align:'left',editor:'text'">Описание</th>
+                <th data-options="field:'url',width:150,align:'left'">Cсылка</th>
+                <th data-options="field:'status',width:150,align:'left'">Статус</th>
+                <th field ="detail" width = "500" formatter="formatDetail">Actions</th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+
+

@@ -1,0 +1,93 @@
+<link rel="stylesheet" href="/jsLibs/themes/default/easyui.css">
+<link rel="stylesheet" href="/jsLibs/themes/icon.css">
+<!--<link rel="stylesheet"  href="'/jsLibs/demo/demo.css">-->
+
+<script src="/jsLibs/jquery.min.js"></script>
+<script src="/jsLibs/jquery.easyui.min.js"></script>
+<script src="/javascripts/createTask.js"></script>
+<script src="/javascripts/criterion.js"></script>
+<script src="/javascripts/messager.js"></script>
+<script type="text/javascript" src="/jsLibs/srcDataGrid/datagrid-cellediting.js"></script>
+
+<!--,toolbar:toolbar-->
+
+<div style="margin:20px 0;"></div>
+<div class="easyui-layout"  style="width:100%;height:100%">
+    <div data-options="region:'east',split:true" title="Критерии по Задачи" style="width:500px;">
+        <table class="easyui-datagrid"  style="width:700px;height:250px"
+               data-options="rownumbers:true,singleSelect:true,toolbar:toolbarCriterion" id="idCriterionGrid">
+            <thead>
+            <tr>
+                <th data-options="field:'name',width:120">Название Критерия</th>
+                <th data-options="field:'description',width:200">Описание Критерия</th>
+                <th data-options="field:'rating',width:50,align:'right'">Оценка</th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+    <div data-options="region:'west',split:true" title="Создание задания" style="width:300px;">
+        <form id="ff" method="post">
+            <div style="margin-bottom:20px">
+                <input class="easyui-textbox" name="nameTask" style="width:100%"
+                       data-options="label:'Name:',required:true" id="idNameTask">
+            </div>
+            <div style="margin-bottom:20px">
+                <input class="easyui-textbox" name="urlTask" style="width:100%"
+                       data-options="label:'Url:',required:true" id="idUrlTask">
+            </div>
+            <div style="text-align:center;">
+                <a href="javascript:void(0)" class="easyui-linkbutton" onclick="LoadResourceParameters()"
+                   style="width:80px">Выгрузить шаблон</a>
+            </div>
+            <div style="margin-bottom:20px">
+                <input class="easyui-textbox" name="description" style="width:100%;height:60px"
+                       data-options="label:'Description:',multiline:true" id="idDescriptionTask">
+            </div>
+            <div style="text-align:center;">
+                <a href="javascript:void(0)" class="easyui-linkbutton" onclick="createTask()"
+                   style="width:80px">Cохранить Задачу</a>
+            </div>
+        </form>
+    </div>
+    <div data-options="region:'center',title:'Параметры',iconCls:'icon-ok'">
+        <table class="easyui-datagrid"  style="width:700px;height:100%"
+               data-options="rownumbers:true,singleSelect:true" id="idParametersGrid">
+            <thead>
+            <tr>
+                <th data-options="field:'name',width:150,align:'left'">Название Параметра</th>
+                <th data-options="field:'label',width:150,align:'left',editor:'text'">Введите свое название</th>
+                <th data-options="field:'currentValue',width:150,align:'left'">Текущее значение</th>
+                <th data-options="field:'isActive',width:80,align:'center',editor:{type:'checkbox',options:{on:'Yes',off:'No'}}">
+                    Использовать
+                </th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+</div>
+
+<div id="dlg" class="easyui-dialog" style="width:400px"
+     closed="true" buttons="#dlg-buttons" cache="false">
+    <form id="fmCreateCriterion" method="post" novalidate style="margin:0;padding:20px 50px">
+        <div style="margin-bottom:20px;font-size:14px;border-bottom:1px solid #ccc">Создайте Критерий</div>
+        <div style="margin-bottom:10px">
+            <input class="easyui-textbox" id="idNameCriteria" name="name" style="width:100%" data-options="label:'Название:',required:true">
+        </div>
+        <div style="margin-bottom:10px">
+            <input class="easyui-textbox" id="idDescriptionCriteria" name="description" style="width:100%;height:60px" data-options="label:'Описание:',multiline:true">
+        </div>
+        <div style="margin-bottom:10px">
+            <input class="easyui-textbox" id="idRatingCriteria" name="rating" style="width:100%" data-options="label:'Оценка:',required:true">
+        </div>
+    </form>
+</div>
+<div id="dlg-buttons">
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="icon-ok" onclick="createNewCiterion()" style="width:90px">Save</a>
+    <a href="javascript:void(0)" class="easyui-linkbutton" iconCls="" onclick="clearCriterionDlg()" style="width:90px">Cancel</a>
+</div>
+<script>
+    $('#idParametersGrid').datagrid({}).datagrid('enableCellEditing').datagrid('gotoCell', {
+        index: 0,
+        field: 'name'
+    });
+</script>

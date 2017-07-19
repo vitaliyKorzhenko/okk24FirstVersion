@@ -1,0 +1,108 @@
+
+
+<!--<p>Введите имя пользователя и пароль. Если такого пользователя нет - он будет создан.</p>-->
+
+
+
+<link rel="stylesheet"  href="/jsLibs/themes/default/easyui.css">
+<link rel="stylesheet"  href="/jsLibs/themes/icon.css">
+<!--<link rel="stylesheet"  href="'/jsLibs/demo/demo.css">-->
+
+<script  src="/jsLibs/jquery.min.js"></script>
+<script  src="/jsLibs/jquery.easyui.min.js"></script>
+<script src = "/javascripts/login.js"> </script>
+<script src="/javascripts/messager.js"></script>
+<script src="/javascripts/cookieTemplate.js"></script>
+<div style="margin:20px 0;"></div>
+<div class="easyui-panel" title="New Topic" style="width:100%;max-width:400px;padding:30px 60px;">
+    <form id="idFormRegistration" class="easyui-form" method="post"  data-options="novalidate:true">
+        <div style="margin-bottom:20px">
+            <input class="easyui-textbox" id="idLogin" name="userName" style="width:100%" data-options="label:'Логин:',required:true">
+        </div>
+        <div style="margin-bottom:20px">
+            <input class="easyui-textbox" id="idPassword" type="password" name= "email" style="width:100%" data-options="label:'Пароль:',required:true">
+        </div>
+    </form>
+    <div style="text-align:center;padding:5px 0">
+        <a href="javascript:void(0)" class="easyui-linkbutton"  onclick="login()" style="width:80px">Войти</a>
+        <a href="javascript:void(0)" class="easyui-linkbutton" onclick="goToRegistration()" style="width:80px">Регистрация</a>
+    </div>
+</div>
+<!--<div class="easyui-panel" title="New Topic" style="width:100%;max-width:400px;padding:30px 60px;">-->
+    <!--<form class=" easyui-form form-horizontal login-form" name="login-form" >-->
+        <!--<div class="form-group">-->
+            <!--<label for="input-username" class="col-lg-2 control-label">Имя</label>-->
+
+            <!--<div class="col-lg-10">-->
+                <!--<input name="login" value="name" type="text" class="form-control" id="input-username" placeholder="Имя">-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="form-group">-->
+            <!--<label for="input-password" class="col-lg-2 control-label">Пароль</label>-->
+
+            <!--<div class="col-lg-10">-->
+                <!--<input name="password" value="pass" type="password" class="form-control" id="input-password" placeholder="Пароль">-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="form-group">-->
+            <!--<div class="col-lg-offset-2 col-lg-10">-->
+                <!--<button type="submit" class="btn btn-primary" data-loading-text="Отправляю...">Войти</button>-->
+                <!--<button type="button" class="btn btn-primary" onclick="goToRegistration()">Регистрация</button>-->
+                <!--<span class="help-block error"></span>-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</form>-->
+
+    <!--<form id="idFormRegistration" class="easyui-form" method="post"  data-options="novalidate:true">-->
+        <!--<div style="margin-bottom:20px">-->
+            <!--<input class="easyui-textbox" id="idUserName" name="userName" style="width:100%" data-options="label:'Логин:',required:true">-->
+        <!--</div>-->
+        <!--<div style="margin-bottom:20px">-->
+            <!--<input class="easyui-textbox" id="idEmail" name= "email" style="width:100%" data-options="label:'Email:',required:true,validType:'email'">-->
+        <!--</div>-->
+        <!--<div style="margin-bottom:20px">-->
+            <!--<input class="easyui-textbox" id="idPassword" name="password" type="password" style="width:100%" data-options="label:'Пароль:',required:true">-->
+        <!--</div>-->
+    <!--</form>-->
+    <!--<div style="text-align:center;padding:5px 0">-->
+        <!--<a href="javascript:void(0)" class="easyui-linkbutton" onclick="UserRegistration()" style="width:80px">Сохранить Данные</a>-->
+    <!--</div>-->
+
+
+
+
+<!--</div>-->
+
+<script>
+    $(document.forms['login-form']).on('submit', function() {
+        var form = $(this);
+
+        $('.error', form).html('');
+        $(":submit", form).button("loading");
+
+        $.ajax({
+            url: "/login",
+            method: "POST",
+            data: form.serialize(),
+            complete: function() {
+                $(":submit", form).button("reset");
+            },
+            statusCode: {
+                200: function() {
+                    form.html("Вы вошли в сайт").addClass('alert-success');
+                },
+                403: function(jqXHR) {
+                    var message = "user already exist";
+//                    var error = JSON.parse(jqXHR.responseText);
+                    $('.error', form).html(error.message);
+                },
+                404: function () {
+                    var message = "user not found";
+//                    var error = JSON.parse(jqXHR.responseText);
+                    $('.error', form).html(error.message);
+                }
+            }
+        });
+        return false;
+    });
+</script>

@@ -1,0 +1,30 @@
+
+
+
+<link rel="stylesheet"  href="/jsLibs/themes/default/easyui.css">
+<link rel="stylesheet"  href="/jsLibs/themes/icon.css">
+<!--<link rel="stylesheet"  href="'/jsLibs/demo/demo.css">-->
+
+<script  src="/jsLibs/jquery.min.js"></script>
+<script  src="/jsLibs/jquery.easyui.min.js"></script>
+
+<script src = "/javascripts/registration.js"> </script>
+<script src="/javascripts/messager.js"></script>
+
+<div style="margin:20px 0;"></div>
+<div class="easyui-panel" title="New Topic" style="width:100%;max-width:400px;padding:30px 60px;">
+    <form id="idFormRegistration" class="easyui-form" method="post"  data-options="novalidate:true">
+        <div style="margin-bottom:20px">
+            <input class="easyui-textbox" id="idUserName" name="userName" style="width:100%" data-options="label:'Логин:',required:true">
+        </div>
+        <div style="margin-bottom:20px">
+            <input class="easyui-textbox" id="idEmail" name= "email" style="width:100%" data-options="label:'Email:',required:true,validType:'email'">
+        </div>
+        <div style="margin-bottom:20px">
+            <input class="easyui-textbox" id="idPassword" name="password" type="password" style="width:100%" data-options="label:'Пароль:',required:true">
+        </div>
+    </form>
+    <div style="text-align:center;padding:5px 0">
+        <a href="javascript:void(0)" class="easyui-linkbutton" onclick="UserRegistration()" style="width:80px">Сохранить Данные</a>
+    </div>
+</div>

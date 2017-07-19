@@ -1,0 +1,25 @@
+
+<link rel="stylesheet"  href="/jsLibs/themes/default/easyui.css">
+<link rel="stylesheet"  href="/jsLibs/themes/icon.css">
+<!--<link rel="stylesheet"  href="'/jsLibs/demo/demo.css">-->
+
+<script  src="/jsLibs/jquery.min.js"></script>
+<script  src="/jsLibs/jquery.easyui.min.js"></script>
+<script src = "/javascripts/admin.js"> </script>
+
+
+
+<div style="margin:20px 0;"></div>
+<div class="easyui-panel" title="New Topic" style="width:100%;max-width:400px;padding:30px 60px;">
+    <form id="idFormCreateUserType" class="easyui-form" method="post"  data-options="novalidate:true">
+        <div style="margin-bottom:20px">
+            <input class="easyui-textbox" id="idNameUserType"  style="width:100%" data-options="label:'Название:',required:true">
+        </div>
+        <div style="margin-bottom:20px">
+            <input class="easyui-textbox" id="idDescriptionUserType"  style="width:100%" data-options="label:'Описание:',multiline:true">
+        </div>
+    </form>
+    <div style="text-align:center;padding:5px 0">
+        <a href="javascript:void(0)" class="easyui-linkbutton" onclick="createNewUserType()" style="width:80px">Сохранить</a>
+    </div>
+</div>
