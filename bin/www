@@ -44,7 +44,7 @@ models.sequelize.sync().then(function() {
     if (process.env.NODE_ENV == 'production')
     {
       address = '137.74.176.57';
-      port = '953';
+      port = '123';
         console.log("LISTEN SERVER: " + address + "PORT: " + port);
     }
     else {
