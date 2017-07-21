@@ -11,7 +11,7 @@ var http = require('http');
 /**
  * Get port from environment and store in Express.
  */
-process.env.NODE_ENV = 'production';
+
 
 
 
@@ -36,9 +36,10 @@ var models = require('../node_modules/.bin/models');
 
 //if you go to refresh database
 //force:true
-models.sequelize.sync().then(function() {
+models.sequelize.sync({force:true}).then(function() {
 
-  
+    process.env.NODE_ENV = 'production';
+
     console.log("now mode" + process.env.NODE_ENV);
 
     if (process.env.NODE_ENV == 'production')
@@ -49,7 +50,7 @@ models.sequelize.sync().then(function() {
     }
     else {
         address = '127.0.0.1';
-        port = '3001';
+        port = '1234';
         console.log("LISTEN SERVER: " + address + "PORT: " + port);
     }
     server.listen(port, address);

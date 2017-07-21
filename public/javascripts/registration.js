@@ -5,50 +5,51 @@ function UserRegistration() {
 
     $('#idFormRegistration').form('submit', {
         onSubmit: function () {
-            var userName = $("#idUserName").val();
+            var userName = $("#idUserNameCreateUser").val();
             console.log("current user name" + userName);
-            var password = $("#idPassword").val();
-            var email = $("#idEmail").val();
-            var userType = $("#idUserType").val();
+            var password = $("#idPasswordCreateUser").val();
+            var email = $("#idEmailCreateUser").val();
+
+            if (!userName) {
+                ShowErrorMessage('Введите Имя, Это поле не может быть пустым!');
+                return false;
+            }
+            if (!password) {
+                ShowErrorMessage('Введите Пароль, Это поле не может быть пустым!');
+                return false;
+            }
+
+            if (!email) {
+                ShowErrorMessage('Емail не может быть пустым');
+                return false;
+            }
 
             var user = {
                 userName: userName,
                 password: password,
-                email: email,
-                userType: userType
+                email: email
             }
 
-            if (!name)
 
-
-                if ($(this).form('enableValidation').form('validate')) {
-                    console.log("form is submitted");
-
-                    $.ajax({
-                        url: "/registration",
-                        method: "POST",
-                        data: user,
-                        statusCode: {
-                            200: function () {
-                                ShowMessage('Вы были успешно зарегистрированы в системе! Теперь можете логинится');
-                                window.location.href = "/login";
-                            },
-                            403: function (jqXHR) {
-                                var error = JSON.parse(jqXHR.responseText);
-                                $('.error', form).html(error.message);
-                            }
+            $.ajax({
+                url: "/registration",
+                method: "POST",
+                data: user,
+                statusCode: {
+                    200: function () {
+                        ShowMessage('Вы были успешно зарегистрированы в системе! Теперь можете логинится');
+                        //TODO: clear inputs
+                        },
+                    403: function (error) {
+                        console.log(error.responseJSON.name);
+                        if (error.responseJSON.name == 'SequelizeUniqueConstraintError') {
+                            ShowErrorMessage('Имя и Email должны быть уникальными! Ваши уже используются в системе');
                         }
-
-                    });
-
-                    return false;
-
-                }
-                else {
-                    console.log("form is not correct");
+                    }
                 }
 
-            return $(this).form('enableValidation').form('validate');
+            });
+            return false;
         },
         success: function (data) {
             console.log("result data: + " + data);

@@ -6,6 +6,9 @@ var router = express.Router();
 
 var adminController = require('../controllers/adminController');
 
+
+var logController = require('../controllers/logController');
+
 // /* GET users listing. */
 router.get('/', function(req, res, next) {
     res.render('admin');
@@ -26,6 +29,24 @@ router.post('/createUserType', function (req, res, next) {
 router.post('/getAllUsers', function (req, res, next) {
     
 })
+
+
+router.post('/getAllLogs', function (req, res, next) {
+    //настроим дату потом или чет такое
+    console.log("!getAllLogs");
+    logController.getAllLogs().then(function (response) {
+        res.status(200);
+        res.send(response);
+    }, function (error) {
+        res.status(403);
+        res.send(error);
+    })
+
+
+})
+
+
+
 
 
 module.exports = router;

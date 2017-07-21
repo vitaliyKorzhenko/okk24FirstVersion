@@ -5,6 +5,10 @@ var promise = require('promise');
 
 var UserType = require('../node_modules/.bin/models').UserType;
 
+var SystemLog = require('../node_modules/.bin/models').UserType;
+
+
+
 function AdminController(userType) {
 
 }

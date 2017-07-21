@@ -14,6 +14,8 @@ var UserType = require('../node_modules/.bin/models').UserType;
 
 var User = require('../node_modules/.bin/models').User;
 
+var LogController = require('./logController');
+
 
 function UserController() {
 }
@@ -47,7 +49,6 @@ function getDefaultUserType() {
                         name: 'tester',
                         description: 'базовый тип, для всех тестировщиков!'
                     }).then(function (userType) {
-
                         resolve(userType);
 
                     }, function (error) {
@@ -65,7 +66,6 @@ function getDefaultUserType() {
 
 UserController.prototype.createNewUser = function (login, password, email) {
     return new Promise(function (resolve, reject) {
-
         getDefaultUserType().then(function (userType) {
             if (userType) {
                 User.create({
@@ -75,11 +75,18 @@ UserController.prototype.createNewUser = function (login, password, email) {
                 }).then(function (user) {
                     if (user) {
                         userType.addUsers(user);
-                        resolve(user);
+                        LogController.createNewLog('info', 'createNewUser', JSON.stringify(user)).then(function (log) {
+                            resolve(user);
+                        }, function (error) {
+                            //TODO: FATAL ERROR!
+                        })
                     }
-                    else {
-                        reject(user);
-                    }
+                }).catch(function (error) {
+                    LogController.createNewLog('error', 'createNewUser', JSON.stringify(error)).then(function (log) {
+                        reject(error);
+                    }, function (error) {
+                        //TODO: FATAL ERROR!
+                    })
 
                 })
             }
@@ -96,31 +103,80 @@ UserController.prototype.login = function (login, password) {
         User.findOne({where: {username: login, password: password}}).then(function (user) {
             if (user) {
                 console.log("Find User Success" + JSON.stringify(user));
-                if (user.password == password) {
-                    resolve(user);
+                if (user && user.password == password) {
+
+                    LogController.createNewLog('info', 'login', JSON.stringify(user)).then(function (log) {
+                        resolve(user);
+                    }, function (error) {
+                        //TODO: FATAL ERROR!
+                    })
+
+
                 }
                 else {
-                    reject('Password is not correct');
+                    LogController.createNewLog('error', 'login', 'Password is not correct').then(function (log) {
+                        reject('Password is not correct');
+                    }, function (error) {
+                        //TODO: FATAL ERROR!
+                    })
                 }
 
             }
             else {
                 if (login == 'admin') {
-
                     UserType.findOne({where: {name: 'admin'}}).then(function (userType) {
                         if (userType) {
                             User.create({username: 'admin', password: '1234'}).then(function (user) {
                                 if (user) {
                                     userType.addUsers(user);
-                                    resolve(user);
+                                    LogController.createNewLog('info', 'login', JSON.stringify(user)).then(function (log) {
+                                        resolve(user);
+                                    }, function (error) {
+                                        //TODO: FATAL ERROR!
+                                    })
                                 }
                             }, function (error) {
-                                reject(error);
+                                LogController.createNewLog('error', 'login', JSON.stringify(error)).then(function (log) {
+                                    reject(error);
+                                }, function (error) {
+                                    //TODO: FATAL ERROR!
+                                })
+
+                            })
+                        }
+                        else {
+                            UserType.create({
+                                name: 'admin',
+                                description: 'админ Бог этой системы'
+                            }).then(function (userType) {
+                                User.create({username: 'admin', password: '1234'}).then(function (user) {
+                                    if (user) {
+                                        userType.addUsers(user);
+                                        LogController.createNewLog('info', 'login', JSON.stringify(user)).then(function (log) {
+                                            resolve(user);
+                                        }, function (error) {
+                                            //TODO: FATAL ERROR!
+                                        })
+                                    }
+                                }, function (error) {
+                                    LogController.createNewLog('error', 'login', JSON.stringify(error)).then(function (log) {
+                                        reject(error);
+                                    }, function (error) {
+                                        //TODO: FATAL ERROR!
+                                    })
+                                })
                             })
                         }
                     })
                 }
-                reject('User Not Found');
+                else {
+                    LogController.createNewLog('error', 'login', 'User Not Found: ' + 'login: ' + login + 'password' + password).then(function (log) {
+                        reject('User Not Found');
+                    }, function (error) {
+                        //TODO: FATAL ERROR!
+                    })
+
+                }
             }
         })
 

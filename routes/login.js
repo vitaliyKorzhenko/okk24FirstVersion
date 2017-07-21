@@ -18,6 +18,7 @@ router.get('/', function(req, res, next) {
 })
 
 router.post('/', function (req, res, next) {
+    console.log("login REQUEST");
     var login = req.body.login;
     var password = req.body.password;
     userController.login(login, password).then(function (response) {
